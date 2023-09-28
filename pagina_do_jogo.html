@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jogo de Stop</title>
+</head>
+<body>
+    <h1>Jogo de Stop</h1>
+    <button id="iniciarJogo">Iniciar Jogo</button>
+    <div id="jogo" style="display: none;">
+        <h2>Letra Sorteada: <span id="letraSorteada"></span></h2>
+        <ul>
+            <li><strong>Nome:</strong> <input type="text" id="nome"></li>
+            <li><strong>Cidade:</strong> <input type="text" id="cidade"></li>
+            <li><strong>Fruta:</strong> <input type="text" id="fruta"></li>
+            <li><strong>Animal:</strong> <input type="text" id="animal"></li>
+            <li><strong>Profissão:</strong> <input type="text" id="profissao"></li>
+        </ul>
+        <button id="pararJogo">Parar o Jogo</button>
+        <h3>Pontuação:</h3>
+        <div id="pontuacao"></div>
+    </div>
+
+    <script>
+        document.getElementById('iniciarJogo').addEventListener('click', iniciarJogo);
+
+        function iniciarJogo() {
+            document.getElementById('iniciarJogo').style.display = 'none';
+            document.getElementById('jogo').style.display = 'block';
+
+            // Sortear uma letra aleatória (A-Z)
+            const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const letraSorteada = letras[Math.floor(Math.random() * letras.length)];
+            document.getElementById('letraSorteada').textContent = letraSorteada;
+
+            // Evento para parar o jogo
+            document.getElementById('pararJogo').addEventListener('click', pararJogo);
+
+            // Inicializar a pontuação
+            const pontuacao = {
+                Nome: 0,
+                Cidade: 0,
+                Fruta: 0,
+                Animal: 0,
+                Profissao: 0,
+            };
+
+            // Event listeners para os campos de entrada
+            const campos = ['nome', 'cidade', 'fruta', 'animal', 'profissao'];
+            campos.forEach((campo) => {
+                const input = document.getElementById(campo);
+                input.addEventListener('blur', () => {
+                    const valor = input.value.trim().toUpperCase();
+                    if (valor[0] === letraSorteada) {
+                        pontuacao[campo] = 1;
+                        atualizarPontuacao();
+                    }
+                });
+            });
+
+            function atualizarPontuacao() {
+                let totalPontos = 0;
+                const pontuacaoDiv = document.getElementById('pontuacao');
+                pontuacaoDiv.innerHTML = '';
+
+                for (const categoria in pontuacao) {
+                    if (pontuacao.hasOwnProperty(categoria)) {
+                        const pontos = pontuacao[categoria];
+                        pontuacaoDiv.innerHTML += `<p><strong>${categoria}:</strong> ${pontos} ponto(s)</p>`;
+                        totalPontos += pontos;
+                    }
+                }
+
+                pontuacaoDiv.innerHTML += `<p><strong>Total:</strong> ${totalPontos} ponto(s)</p>`;
+            }
+
+            function pararJogo() {
+                const totalPontos = Object.values(pontuacao).reduce((a, b) => a + b, 0);
+                alert(`Jogo Encerrado! Sua pontuação total é ${totalPontos} ponto(s).`);
+                reiniciarJogo();
+            }
+
+            function reiniciarJogo() {
+                document.getElementById('jogo').style.display = 'none';
+                document.getElementById('iniciarJogo').style.display = 'block';
+
+                campos.forEach((campo) => {
+                    document.getElementById(campo).value = '';
+                });
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+    
+        h1 {
+            color: #333;
+        }
+    
+        #iniciarJogo, #pararJogo {
+            background-color: #3498db;
+            color: #fff;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    
+        #iniciarJogo:hover, #pararJogo:hover {
+            background-color: #2980b9;
+        }
+    
+        #jogo {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+    
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+    
+        li {
+            margin: 10px 0;
+        }
+    
+        input {
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    
+        h2 {
+            color: #333;
+        }
+    
+        h3 {
+            color: #333;
+        }
+    
+        #pontuacao {
+            font-size: 18px;
+        }
+    
+        p {
+            margin: 5px 0;
+        }
+    </style>
+    
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - Jogo de Stop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .login-container {
+            background-color: #fff;
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login - Jogo de Stop</h1>
+        <form id="loginForm">
+            <input type="text" id="nome" placeholder="Seu Nome" required>
+            <input type="password" id="senha" placeholder="Senha (123)" required>
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const nome = document.getElementById('nome').value.trim();
+            const senha = document.getElementById('senha').value.trim();
+
+            // Verifica se a senha é "123" (você pode personalizar a senha aqui)
+            if (senha === '123') {
+                window.location.href = 'pagina_do_jogo.html'; // Redireciona para a página do jogo
+            } else {
+                alert('Senha incorreta. Tente novamente com a senha "123".');
+            }
+        });
+    </script>
+</body>
+</html>
